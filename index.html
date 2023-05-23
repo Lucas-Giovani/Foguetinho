@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foguete</title>
+</head>
+<style>
+
+    body
+    {
+        background-image: linear-gradient(0deg,lightblue,darkblue);
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .foguete
+    {
+        position: absolute;
+        left: 50%;
+        margin-left: -40px;
+        top: 100vh;
+        margin-top: -160px;
+        animation: volta 5s;
+        animation-delay: 5s;
+        cursor: pointer;
+    }
+    
+    /* @keyframes volta
+    {
+        0%   { rotate: 0deg;  }
+        50% { rotate: 180deg; }
+        75% { rotate: 270deg; }
+        100% {rotate: 360deg; }
+    } 
+    */
+
+    .terra
+    {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        background-color: blue;
+        border-radius: 50px;
+        justify-content: center;
+        align-items: center;
+        border-style: solid;
+        position: absolute;
+        border-width: 3px;
+        left: 50%;
+        margin-left: -50px;
+        top: 85%;
+        margin-bottom: 0px;
+    }
+    .brasil
+    {
+        width: 20px;
+        height: 30px;
+        display: flex;
+        background-color: green;
+        border-radius: 7px;
+        margin-left: -25px;
+        margin-bottom: -40px;
+        border-style: solid;
+        border-width: 3px;
+    }
+
+    .eua
+    {
+        width: 30px;
+        height: 20px;
+        display: flex;
+        background-color: green;
+        border-radius: 8px;
+        margin-left: -25px;
+        margin-bottom: 40px;
+        border-style: solid;
+        border-width: 3px;
+    }
+
+    .africa
+    {
+        width: 25px;
+        height: 35px;
+        display: flex;
+        background-image: linear-gradient(0deg,green,rgb(121, 81, 7),rgb(163, 106, 0));
+        border-radius: 8px;
+        margin-left: 35px;
+        margin-top: 25px;
+        border-style: solid;
+        border-width: 3px;
+        position: absolute;
+    }
+
+    .estrela
+    {
+        display: flex;
+        margin-top: 150px;
+        margin-left: 1200px;
+        position: absolute;
+    }
+
+    .estrela1
+    {
+        display: flex;
+        margin-top: 300px;
+        margin-left: 300px;
+        position: absolute;
+    }
+
+    .estrela2
+    {
+        display: flex;
+        margin-top: 500px;
+        margin-left: 150px;
+        position: absolute;
+    }
+
+    .estrela3
+    {
+        display: flex;
+        margin-top: 100px;
+        margin-left: 125px;
+        position: absolute;
+    }
+
+    .marte
+    {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        position: absolute;
+        border-radius: 100px;
+        border-style: solid;
+        border-width: 3px;
+        background-image: linear-gradient(0deg, rgb(165, 71, 42), rgb(165, 71, 42), black);
+        left: 50%;
+        margin-left: -50px;
+        margin-top: 25px;
+    }
+
+</style>
+<body>
+    
+    <div class="marte"></div>
+    <img class="foguete" src="foguete.gif" onclick="Comecar();" width="80px" id="foguete">
+
+    <audio id="audio1" autoplay="">
+        <source src="contagem_regressiva.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="audio2" autoplay="">
+        <source src="lancamento_foguete.mp3" type="audio/mp3">
+    </audio
+
+    <audio id="audio3" autoplay="">
+        <source src="problem.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="terra">
+        <div class="brasil"></div>
+        <div class="eua"></div>
+        <div class="africa"></div>
+    </div>
+    <img class="estrela" src="estrela.png" width="20px">
+    <img class="estrela1" src="estrela.png" width="20px">
+    <img class="estrela2" src="estrela.png" width="20px">
+    <img class="estrela3" src="estrela.png" width="20px">
+</body>
+<script src="jquery-3.7.0.min.js"></script>
+
+<script>
+
+    function Comecar()
+    {
+        temporizador = setTimeout(Subir,20000)
+
+        contagem = document.getElementById('audio1');
+        contagem.play();
+
+        temporizador2 = setTimeout(Tocar2, 20000)
+        temporizador3 = setTimeout(Tocar3, 38000)
+    }
+
+    function Tocar2()
+    {
+        contagem = document.getElementById('audio2');
+        contagem.play();
+    }
+
+    d = new Date();
+    tempo_inicial = d.getTime();
+
+    function Tocar3()
+    {
+        contagem = document.getElementById('audio3');
+        contagem.play();
+    }
+
+    
+    x = 800
+    y = 100
+    TOPO = ""
+
+    function Subir()
+    {
+        TOPO = y + 110
+        $("#foguete").animate({top:TOPO},10000)
+
+        temporizador = null //Cancela a animação subir
+        temporizador = setInterval(Descer,2000)
+    }   
+
+    function Descer()
+    {
+        y = y + 1000
+        if(y>800)
+        {
+            y = 800
+        }
+        TOPO = y + "px"
+        $("#foguete").animate({top:TOPO},8000)
+    }
+
+    document.onkeydown = Pega_Tecla;
+
+function Pega_Tecla(e) 
+{	
+    e = e || window.event;
+
+    tecla = e.keyCode;
+    console.log(tecla); // MOSTRA O CÓDIGO DA TECLA PRESSIONADA
+
+    d2 = new Date();
+    tempo_final = d2.getTime();
+    if(tempo_final-tempo_inicial>2000)
+    {
+        tempo_inicial = tempo_final
+
+    if(tecla == 37)
+    {
+        $("#foguete").stop()
+        x = x - 200       
+        ESQUERDA = x + "px"
+        Descer()
+    }
+
+    if(tecla == 39)
+    {
+        $("#foguete").stop()
+        x = x + 200
+        ESQUERDA = x + "px"
+        Descer()
+    }
+}
+
+    
+}
+</script>
+
+</html>
